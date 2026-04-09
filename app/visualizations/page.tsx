@@ -80,7 +80,7 @@ export default function VisualizationsPage() {
                 <YAxis tick={{ fontSize: 11 }} domain={['auto', 'auto']}/>
                 <Tooltip
                   labelFormatter={(v) => new Date(v).toLocaleDateString('en-IN')}
-                  formatter={(v: number) => [`₹${v.toFixed(2)}`, 'DAM Price']}
+                  formatter={(v: any) => [`₹${Number(v).toFixed(2)}`, 'DAM Price']}
                 />
                 <Line type="monotone" dataKey="value" stroke="#1e40af" strokeWidth={2} dot={false}/>
               </LineChart>
@@ -99,7 +99,7 @@ export default function VisualizationsPage() {
                 <YAxis tick={{ fontSize: 11 }} domain={['auto', 'auto']}/>
                 <Tooltip
                   labelFormatter={(v) => new Date(v).toLocaleDateString('en-IN')}
-                  formatter={(v: number) => [`${v.toLocaleString()} MW`, 'Demand']}
+                  formatter={(v: any) => [`${Number(v).toLocaleString()} MW`, 'Demand']}
                 />
                 <Area type="monotone" dataKey="value" stroke="#0891b2" fill="#e0f2fe" strokeWidth={2}/>
               </AreaChart>
@@ -116,7 +116,7 @@ export default function VisualizationsPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9"/>
                 <XAxis dataKey="date" tick={{ fontSize: 11 }} interval={Math.floor(genData.length / 6)}/>
                 <YAxis tick={{ fontSize: 11 }}/>
-                <Tooltip formatter={(v: number) => `${v.toLocaleString()} MW`}/>
+                <Tooltip formatter={(v: any) => `${Number(v).toLocaleString()} MW`}>
                 <Legend/>
                 <Bar dataKey="coal" stackId="a" fill="#475569" name="Coal"/>
                 <Bar dataKey="hydro" stackId="a" fill="#0891b2" name="Hydro"/>
@@ -138,7 +138,7 @@ export default function VisualizationsPage() {
                 <YAxis tick={{ fontSize: 11 }} domain={[49.7, 50.3]}/>
                 <Tooltip
                   labelFormatter={(v) => new Date(v).toLocaleDateString('en-IN')}
-                  formatter={(v: number) => [`${v.toFixed(3)} Hz`, 'Frequency']}
+                  formatter={(v: any) => [`${Number(v).toFixed(3)} Hz`, 'Frequency']}
                 />
                 <ReferenceLine y={50.2} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: '50.2', fontSize: 10 }}/>
                 <ReferenceLine y={49.8} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: '49.8', fontSize: 10 }}/>
