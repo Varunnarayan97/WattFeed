@@ -1,5 +1,13 @@
- import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+
+type GenDay = {
+  date: string
+  coal: number
+  solar: number
+  wind: number
+  hydro: number
+}
 
 export async function GET(req: NextRequest) {
   const days = parseInt(req.nextUrl.searchParams.get('days') || '30')
@@ -30,18 +38,16 @@ export async function GET(req: NextRequest) {
     result[metric] = data || []
   }
 
-  // Build generation mix by day
   const genByDay: Record<string, GenDay> = {}
-  type GenDay = { date: string; coal: number; solar: number; wind: number; hydro: number }
 
-  const genMetrics: Record<string, keyof GenDay> = {
-    gen_coal_mw: 'coal',
-    gen_solar_mw: 'solar',
-    gen_wind_mw: 'wind',
-    gen_hydro_mw: 'hydro',
-  }
+  const genMetrics: Array<{ metric: string; key: keyof Omit<GenDay, 'date'> }> = [
+    { metric: 'gen_coal_mw', key: 'coal' },
+    { metric: 'gen_solar_mw', key: 'solar' },
+    { metric: 'gen_wind_mw', key: 'wind' },
+    { metric: 'gen_hydro_mw', key: 'hydro' },
+  ]
 
-  for (const [metric, key] of Object.entries(genMetrics)) {
+  for (const { metric, key } of genMetrics) {
     for (const row of result[metric]) {
       const date = row.timestamp.split('T')[0]
       if (!genByDay[date]) {
